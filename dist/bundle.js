@@ -81,55 +81,35 @@ __webpack_require__(1);
  * Created by binyamin.greenberg on 8/23/17.
  */
 function appCtr($http) {
+    var url = 'https://94fba154fa7d00f3cda66819e29b54aa.europe-west1.gcp.cloud.es.io:9243/word/';
     var self = this;
 
     self.simulateQuery = false;
     self.isDisabled    = false;
-
+    self.time;
     // list of `state` value/display objects
     self.querySearch   = querySearch;
-    self.selectedItemChange = selectedItemChange;
-    self.searchTextChange   = searchTextChange;
-
+    self.addCount = addCount;
     // ******************************
     // Internal methods
     // ******************************
 
     /**
-     * Search for states... use $timeout to simulate
      * remote dataservice call.
      */
     function querySearch (query) {
-        return $http
-            .get('https://jsonplaceholder.typicode.com/posts')
-            .then(function(data) {
+        var postData = {"_source":false,"suggest":{"suggest":{"prefix":query,"completion":{"field":"word"}}}};
+        return $http.post(url+'_search',postData)
+            .then(function(res) {
+                self.time = res.data.took;
                 // Map the response object to the data object
-                data.map(function (x) {
-                    return x.title;
-                })
-                return data;
+                return res.data.suggest.suggest[0].options;
             });
     }
 
-    function searchTextChange(text) {
-        $log.info('Text changed to ' + text);
-    }
-
-    function selectedItemChange(item) {
-        $log.info('Item changed to ' + JSON.stringify(item));
-    }
-
-
-    /**
-     * Create filter function for a query string
-     */
-    function createFilterFor(query) {
-        var lowercaseQuery = angular.lowercase(query);
-
-        return function filterFn(state) {
-            return (state.value.indexOf(lowercaseQuery) === 0);
-        };
-
+    function addCount(id){
+        var postData = {"script" : "ctx._source.word.weight+=1"};
+        $http.post(url + 'website/' + id + '/_update',postData);
     }
 
 }
