@@ -14,8 +14,8 @@
 </head>
 <body ng-app='app' ng-controller='appCtr as ctrl'>
 <md-content class="md-padding">
-        <p>Search more than 100,000 words</p>
-        <p>Last search took  {{ctrl.time}}  milliseconds</p>
+        <p>AutoComplete search on more than 100,000 words</p>
+        <p>Showing 5 options by popularity ranking</p>
         <md-autocomplete
                 md-no-cache="true"
                 md-selected-item="ctrl.selectedItem"
@@ -25,6 +25,7 @@
                 md-items="item in ctrl.querySearch(ctrl.searchText)"
                 md-item-text="item.text"
                 md-min-length="1"
+                md-delay="300"
                 placeholder="Search for Words">
             <md-item-template>
                 <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.text}}</span>
@@ -34,7 +35,8 @@
                 No word matching "{{ctrl.searchText}}" were found.
             </md-not-found>
         </md-autocomplete>
-        <md-button class="md-primary" ng-click="ctrl.addCount(ctrl.selectedItem._id)">Search</md-button>
+    <p>Last search took  <u>{{ctrl.time}}</u>  milliseconds</p>
+    <p>Click on <md-button class="md-primary md-raised" ng-click="ctrl.addCount(ctrl.selectedItem._id)">Search</md-button> in order to add to the words ranking</p>
 </md-content>
 </body>
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.11/angular.min.js"></script>
