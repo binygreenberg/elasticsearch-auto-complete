@@ -108,6 +108,10 @@ function appCtr($http) {
     }
 
     function addCount(id){
+        if (self.searchText.length === 0){
+            alert('please choose a word first');
+            return;
+        }
         var postData = {"script" : "ctx._source.word.weight+=1"};
         $http.post(url + 'website/' + id + '/_update',postData);
     }
