@@ -15,7 +15,7 @@
 <body ng-app='app' ng-controller='appCtr as ctrl'>
 <md-content class="md-padding">
         <p>AutoComplete search on more than 100,000 words</p>
-        <p>Showing 5 options by popularity ranking</p>
+        <p>Showing 5 options ranked by popularity (all words popularity initialized to 1)</p>
         <md-autocomplete
                 md-no-cache="true"
                 md-selected-item="ctrl.selectedItem"
@@ -36,7 +36,7 @@
             </md-not-found>
         </md-autocomplete>
     <p>Last search took  <u>{{ctrl.time}}</u>  milliseconds</p>
-    <p>Click on <md-button class="md-primary md-raised" ng-click="ctrl.addCount(ctrl.selectedItem._id)">Search</md-button> in order to add to the words ranking</p>
+    <p>Click on <md-button class="md-primary md-raised" ng-click="ctrl.addCount(ctrl.selectedItem._id)">Search</md-button> in order to add to the word's ranking</p>
 </md-content>
 </body>
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.11/angular.min.js"></script>
