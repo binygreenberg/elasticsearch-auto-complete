@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width">
+    <base href="/">
+    <meta charset="UTF-8">
+    <title>AutoComplete</title>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.4/angular-material.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <style>
+        footer {background-color: #ccc;}
+    </style>
+</head>
+<body ng-app='app' ng-controller='appCtr as ctrl'>
+<md-content class="md-padding">
+        <p>Search more than 100,000 words</p>
+        <p>Last search took  {{ctrl.time}}  milliseconds</p>
+        <md-autocomplete
+                md-no-cache="true"
+                md-selected-item="ctrl.selectedItem"
+                md-search-text-change="ctrl.searchTextChange(ctrl.searchText)"
+                md-search-text="ctrl.searchText"
+                md-selected-item-change="ctrl.selectedItemChange(item)"
+                md-items="item in ctrl.querySearch(ctrl.searchText)"
+                md-item-text="item.text"
+                md-min-length="1"
+                placeholder="Search for Words">
+            <md-item-template>
+                <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.text}}</span>
+                <span> -- {{item._score}}</span>
+            </md-item-template>
+            <md-not-found>
+                No word matching "{{ctrl.searchText}}" were found.
+            </md-not-found>
+        </md-autocomplete>
+        <md-button class="md-primary" ng-click="ctrl.addCount(ctrl.selectedItem._id)">Search</md-button>
+</md-content>
+</body>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.11/angular.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.11/angular-animate.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.11/angular-aria.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.11/angular-cookies.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.11/angular-messages.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.4/angular-material.min.js"></script>
+<script src="bundle.js"></script>
+</html>
