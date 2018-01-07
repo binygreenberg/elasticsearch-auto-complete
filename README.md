@@ -4,7 +4,7 @@ search words with autocomplete engine and filtered by popularity
 Create google like autocomplete for words ranked by popularity. 
 
 One of the beauties of elasticsearch is the autocomlete feature. 
-Not only
+Not only does 
 See [this](https://www.elastic.co/blog/you-complete-me)
 article to learn about how it works behind the sences (hint: graphs)
 
@@ -19,7 +19,7 @@ curl -H'Content-Type: application/json' -XGET 'localhost:9200/_count?pretty' -d 
     }
 }'
 ```
-
+```
 curl -H'Content-Type: application/json' -XPUT 'localhost:9200/word?pretty' -d ' 
 {
   "mappings": {
@@ -32,7 +32,8 @@ curl -H'Content-Type: application/json' -XPUT 'localhost:9200/word?pretty' -d '
     }
   }
 }'
-
+```
+```
 curl -H'Content-Type: application/json' -XPOST 'localhost:9200/word/website/_bulk?pretty' -d ' 
 {"index":{"_id":"1"}}
 {"word":{"input":"heelo","weight":2}}
@@ -41,6 +42,8 @@ curl -H'Content-Type: application/json' -XPOST 'localhost:9200/word/website/_bul
 {"index":{"_id":"3"}}
 {"word":{"input":"world","weight":4}}
 '
+```
+```
 curl -H'Content-Type: application/json' -XPOST 'localhost:9200/word/_search?pretty' -d '
 {
   "_source": false,
@@ -53,8 +56,14 @@ curl -H'Content-Type: application/json' -XPOST 'localhost:9200/word/_search?pret
         }
     }
 }'
-
+```
+```
 curl -H'Content-Type: application/json' -XPOST 'localhost:9200/word/website/1/_update' -d '
 {
    "script" : "ctx._source.word.weight+=1"
 }'
+```
+```
+curl -H'Content-Type: application/json' -XPOST 'localhost:9200/word/website/_bulk?pretty=true' --data-binary @words.json
+```
+
